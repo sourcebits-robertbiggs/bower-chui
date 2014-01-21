@@ -9,9 +9,9 @@
 
 ChocolateChip-UI
 ChUI.iOS.css
-Copyright 2013 Sourcebits www.sourcebits.com
+Copyright 2014 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.5.0
+Version: 3.5.1
 */
 /* ==============================
    Body
@@ -156,6 +156,18 @@ article {
   transform: translate3d(-100%, 0, 0);
   opacity: 1;
   visibility: visible;
+}
+html[dir=rtl] .current {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+html[dir=rtl] .next {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+html[dir=rtl] .previous {
+  -webkit-transform: translate3d(105%, 0, 0);
+  transform: translate3d(105%, 0, 0);
 }
 /* ==============================
    Scrollers
@@ -316,7 +328,7 @@ nav > a.button {
   right: 15px;
   margin-right: 0 !important;
   z-index: 100;
-  top: 0px;
+  top: 3px;
 }
 .isDesktopSafari a.button.back {
   margin-top: 8px !important;
@@ -327,6 +339,24 @@ nav > a.button {
 .isSafari6 a .button.backTo {
   display: -webkit-box;
   margin-top: 0;
+}
+html[dir=rtl] a.button.align-flush {
+  right: auto;
+  left: 15px;
+}
+html[dir=rtl] a.button.back,
+html[dir=rtl] a.button.backTo {
+  padding: 0 20px 0 0 !important;
+}
+html[dir=rtl] a.button.back::before,
+html[dir=rtl] a.button.backTo::before {
+  -webkit-transform: rotate(180deg);
+  right: -4px;
+  left: auto;
+}
+html[dir=rtl] .toolbar > .button.align-flush {
+  right: auto;
+  left: 15px;
 }
 /* ==============================
    Nav Bars
@@ -570,6 +600,31 @@ section h2.normal-case {
 section h2.wrap {
   white-space: normal;
 }
+html[dir=rtl] section h2 {
+  margin: 26px 15px 6px 0;
+}
+html[dir=rtl] .list li {
+  padding: 13px 15px 13px 5px;
+}
+html[dir=rtl] .list li::before {
+  left: 0px;
+  right: 15px;
+}
+html[dir=rtl] .list li.nav::after {
+  right: auto;
+  top: 20px;
+  left: 15px;
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+html[dir=rtl] .list li.show-detail::after {
+  left: 10px;
+  right: auto;
+}
+html[dir=rtl] .list li.nav::after {
+  left: 15px;
+  right: auto;
+}
 /* ==============================
    Comp List Items
    =========================== */
@@ -682,12 +737,188 @@ li.comp.wrap > div > h4 {
   white-space: wrap;
   overflow: visible;
 }
+html[dir=rtl] li.comp {
+  padding-bottom: 0 !important;
+}
+html[dir=rtl] li.comp > aside > .nav::after {
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+html[dir=rtl] li.comp > aside:first-child {
+  margin-left: 10px;
+  margin-right: 0;
+}
+html[dir=rtl] li.comp > aside:last-child {
+  padding: 0 10px 0 0;
+}
+html[dir=rtl] li.comp > aside:last-child > .nav::after {
+  margin-left: -10px !important;
+}
+html[dir=rtl] li.comp > aside > span.counter,
+html[dir=rtl] li.comp > aside > span.date-time {
+  margin-right: 5px;
+  margin-left: 0px;
+}
+html[dir=rtl] li.comp > aside > h4 {
+  padding-bottom: 4px;
+}
 @media only screen and (max-device-width: 320px) and (orientation: portrait) {
   li.comp > aside > h4 {
     max-width: 100px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+/* ==============================
+   Grids
+   =========================== */
+/* Grid: */
+.grid {
+  display: -webkit-box;
+  -webkit-box-orientation: horizontal;
+  -webkit-box-align: stretch;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  -webkit-align-items: stretch;
+  display: -ms-flexbox;
+  -ms-flex-direction: row;
+  -ms-align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+/* Allow columns to wrap */
+.grid.wrap {
+  -webkit-box-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+/* Column: */
+.col {
+  -webkit-box-flex: 1 1 auto;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+/* Centered grids: */
+.grid.center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+.center .col {
+  -webkit-flex-grow: 0;
+  -webkit-flex-shrink: 0;
+  -ms-flex-grow: 0;
+  -ms-flex-shrink: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+/* Columns: */
+.flex-1 {
+  -webkit-flex-basis: 10%;
+  -ms-flex-basis: 10%;
+  flex-basis: 10%;
+}
+.flex-2 {
+  -webkit-flex-basis: 20%;
+  -ms-flex-basis: 20%;
+  flex-basis: 20%;
+}
+.flex-3 {
+  -webkit-flex-basis: 30%;
+  -ms-flex-basis: 30%;
+  flex-basis: 30%;
+}
+.flex-4 {
+  -webkit-flex-basis: 40%;
+  -ms-flex-basis: 40%;
+  flex-basis: 40%;
+}
+.flex-5 {
+  -webkit-flex-basis: 50%;
+  -ms-flex-basis: 50%;
+  flex-basis: 50%;
+}
+.flex-6 {
+  -webkit-flex-basis: 60%;
+  -ms-flex-basis: 60%;
+  flex-basis: 60%;
+}
+.flex-7 {
+  -webkit-flex-basis: 70%;
+  -ms-flex-basis: 70%;
+  flex-basis: 70%;
+}
+.flex-8 {
+  -webkit-flex-basis: 80%;
+  -ms-flex-basis: 80%;
+  flex-basis: 80%;
+}
+.flex-9 {
+  -webkit-flex-basis: 90%;
+  -ms-flex-basis: 90%;
+  flex-basis: 90%;
+}
+.flex-10 {
+  -webkit-flex-basis: 100%;
+  -ms-flex-basis: 100%;
+  flex-basis: 100%;
+}
+.gutter-5 .col {
+  margin: 5px;
+}
+.gutter-10 .col {
+  margin: 10px;
+}
+html[dir=rtl] .grid {
+  -webkit-box-direction: horizontal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+/* Mobile */
+@media only screen and (max-width: 599px) {
+  .grid {
+    -webkit-box-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -wekbit-flex-direction: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin: 0 !important;
+  }
+  .col.flex-1,
+  .col.flex-2,
+  .col.flex-3,
+  .col.flex-4 {
+    -webkit-box-flex: 1 !important;
+    -webkit-flex: 1 !important;
+    -ms-flex: 1 !important;
+    flex: 1 !important;
+    -webkit-flex-basis: 50%;
+    -ms-flex-basis: 50%;
+    flex-basis: 50%;
+  }
+  .col.flex-5,
+  .col.flex-6,
+  .col.flex-7,
+  .col.flex-8,
+  .col.flex-9,
+  .col.flex-10 {
+    -webkit-box-flex: 2 !important;
+    -webkit-flex: 2 !important;
+    -ms-flex: 2 !important;
+    flex: 2 !important;
+  }
+  .isWindows .grid,
+  .isWindows .col {
+    display: block;
   }
 }
 /* ==============================
@@ -760,6 +991,26 @@ div.horizontal.centered > .segmented {
   position: absolute;
   right: 15px;
   top: 6px;
+}
+html[dir=rtl] .segmented.align-flush {
+  position: absolute;
+  right: auto;
+  left: 15px;
+  top: 6px;
+}
+html[dir=rtl] .segmented .button:first-of-type {
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+html[dir=rtl] .segmented .button:last-of-type {
+  border-left: solid 1px #007aff;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 /* ==============================
    Segmented Paging Control
@@ -848,6 +1099,39 @@ article.paging.vertical > section.next {
   -webkit-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
+html[dir=rtl] .segmented.paging.horizontal {
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+html[dir=rtl] .segmented.paging.horizontal .button:first-child {
+  -webkit-box-ordinal-group: 2;
+  -webkit-order: 2;
+  order: 2;
+  border: none !important;
+}
+html[dir=rtl] .segmented.paging.horizontal .button:last-child {
+  -webkit-box-ordinal-group: 1;
+  -webkit-order: 1;
+  order: 1;
+}
+html[dir=rtl] .segmented.paging.horizontal > .button::before {
+  top: -2px;
+}
+html[dir=rtl] article.paging.horizontal > section.previous {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+html[dir=rtl] article.paging.horizontal > section.current {
+  -webkit-transform: translate3d(0, 0, 0) scale(1, 1);
+  transform: translate3d(0, 0, 0) scale(1, 1);
+}
+html[dir=rtl] article.paging.horizontal > section.next {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+html[dir=rtl] .segmented.paging.horizontal > .button::before {
+  -webkit-transform: rotate(180deg);
+}
 /* ==============================
    Toolbar
    =========================== */
@@ -910,6 +1194,17 @@ div.toolbar.previous {
   -webkit-transform: translate3d(-101%, 0, 0) !important;
   transform: translate3d(-101%, 0, 0) !important;
 }
+html[dir=rtl] .splitlayout > .master + .toolbar {
+  right: 0;
+  left: 320px;
+  width: 320px;
+  border-right: none;
+  border-left: solid 1px #c8c8c7 !important;
+}
+html[dir=rtl] .splitlayout > .detail + .toolbar {
+  right: 320px;
+  left: 0;
+}
 /* ==============================
    Split Layout
    =========================== */
@@ -965,6 +1260,26 @@ body.splitlayout > article.detail {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+}
+html[dir=rtl] body.splitlayout > nav:first-of-type {
+  right: 0;
+  left: 320px;
+  border-right: none;
+  border-left: solid 1px #c8c8c7 !important;
+}
+html[dir=rtl] body.splitlayout > nav:last-of-type {
+  left: 0;
+  right: 320px;
+}
+html[dir=rtl] body.splitlayout > article.master {
+  left: 320px !important;
+  right: 0 !important;
+  border-right: none !important;
+  border-left: solid 1px #c8c8c7 !important;
+}
+html[dir=rtl] body.splitlayout > article.detail {
+  right: 320px !important;
+  left: 0 !important;
 }
 @media only screen and (max-device-width: 320px) and (orientation: portrait) {
   .splitlayout > article.master {
@@ -1224,6 +1539,7 @@ body.splitlayout > article.detail {
   position: absolute;
   right: 0;
   top: 0;
+  bottom: 0;
   /* old flex box */
 
   display: -webkit-box;
@@ -1254,6 +1570,9 @@ body.splitlayout > article.detail {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+.list.deletable > li.selected {
+  margin-right: 80px;
+}
 .list.deletable > li.selected h3,
 .list.deletable > li.selected h4,
 .list.deletable > li.selected p {
@@ -1266,10 +1585,6 @@ body.splitlayout > article.detail {
 .list.deletable > li.selected > .button.delete {
   -webkit-transform: translate3d(80px, 0, 0);
   transform: translate3d(80px, 0, 0);
-}
-.list.deletable > li.selected {
-  -webkit-transform: translate3d(-80px, 0, 0);
-  transform: translate3d(-80px, 0, 0);
 }
 .list.showIndicators .deletion-indicator {
   margin-left: 0;
@@ -1289,6 +1604,33 @@ body.splitlayout > article.detail {
   margin: -20px;
   position: relative;
   right: 15px;
+}
+html[dir=rtl] .list > li > .deletion-indicator {
+  float: right;
+  margin-right: auto;
+  margin-left: -20px;
+  right: -40px;
+}
+html[dir=rtl] .list > li > .button.delete {
+  -webkit-transform: translate3d(-80px, 0, 0);
+  left: 0;
+  right: auto;
+}
+html[dir=rtl] .list.showIndicators > li > .deletion-indicator {
+  right: 0px !important;
+  margin-left: 10px;
+}
+html[dir=rtl] .list.showIndicators > li > .button.delete {
+  right: auto;
+  left: 0 !important;
+}
+html[dir=rtl] .list.showIndicators > li.selected {
+  margin-right: 0;
+  margin-left: 80px;
+}
+html[dir=rtl] .list.showIndicators > li.selected > .button.delete {
+  -webkit-transform: translate3d(-80px, 0, 0);
+  transform: translate3d(-80px, 0, 0);
 }
 /* ==============================
    Form Elements
@@ -1372,6 +1714,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 .list.select li.selected:hover {
   background-color: #d9d9d9;
+}
+html[dir=rtl] .list.select li.selected::after {
+  float: left;
 }
 /* ==============================
    Sheet Control
@@ -1551,6 +1896,18 @@ body.slide-out-app > nav:not(:first-of-type).show {
   display: block !important;
   z-index: 10000;
 }
+html[dir=rtl] .button.slide-out-button {
+  right: 15px;
+  left: auto;
+}
+html[dir=rtl] .slide-out {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+html[dir=rtl] .slide-out.open {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
 /* ==============================
    Stepper Control
    =========================== */.stepper {
@@ -1615,6 +1972,20 @@ body.slide-out-app > nav:not(:first-of-type).show {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-left: none;
+}
+html[dir=rtl] .stepper > .button:first-of-type {
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-right: solid 1px #007aff;
+  border-left: none;
+}
+html[dir=rtl] .stepper > .button:last-of-type {
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-left: solid 1px #007aff;
+  border-right: none;
 }
 /* ==============================
    Switched List Items
@@ -1792,6 +2163,14 @@ body.slide-out-app > nav:not(:first-of-type).show {
   100% {
     width: 27px;
   }
+}
+html[dir=rtl] .switch > em {
+  -webkit-transform: translate3d(-23px, 0, 0);
+  transform: translate3d(-23px, 0, 0);
+}
+html[dir=rtl] .switch.on > em {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 /* ==============================
    Tab Bar

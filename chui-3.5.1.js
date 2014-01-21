@@ -9,9 +9,9 @@
 
 ChocolateChip-UI
 ChUI.js
-Copyright 2013 Sourcebits www.sourcebits.com
+Copyright 2014 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.5.0
+Version: 3.5.1
 */
 (function($) {
   'use strict';
@@ -403,6 +403,57 @@ Version: 3.5.0
           }
         }
       }
+
+      if ($.isAndroid) {
+        $.gestureLength = 10;
+
+        if (!!touch.el) {
+          // Swipe detection:
+          if ((touch.x2 && Math.abs(touch.x1 - touch.x2) > $.gestureLength) ||
+        (touch.y2 && Math.abs(touch.y1 - touch.y2) > $.gestureLength))  {
+            swipeTimeout = setTimeout(function() {
+              e.preventDefault();
+              if (touch && touch.el) {
+                touch.el.trigger('swipe');
+                touch.el.trigger('swipe' + (swipeDirection(touch.x1, touch.x2, touch.y1, touch.y2)));
+                touch = {};
+              }
+            }, 0);
+
+          // Normal tap:
+          } else if ('last' in touch) {
+
+            // Delay by one tick so we can cancel the 'tap' event if 'scroll' fires:
+            tapTimeout = setTimeout(function() {
+
+            // Trigger universal 'tap' with the option to cancelTouch():
+            if (touch && touch.el) {
+              touch.el.trigger('tap');
+            }
+
+            // Trigger double tap immediately:
+            if (touch && touch.isDoubleTap) {
+              if (touch && touch.el) {
+              touch.el.trigger('doubletap');
+              touch = {};
+              }
+            } else {
+              // Trigger single tap after singleTapDelay:
+              touchTimeout = setTimeout(function(){
+              touchTimeout = null;
+              if (touch && touch.el) {
+                touch.el.trigger('singletap');
+                touch = {};
+                return false;
+              }
+              }, singleTapDelay);
+            }
+
+            }, 0);
+          }
+        } else { return; }  
+      }
+
     });
     body.on($.eventEnd, function(e) {
       if (window.navigator.msPointerEnabled) {
@@ -587,9 +638,9 @@ Version: 3.5.0
           }
         }
         return false;
-      });          
+      });
     },
-  
+
     publish : function ( topic, args ) {
       if (!$.subscriptions[topic]) {
         return false;
@@ -601,7 +652,8 @@ Version: 3.5.0
         }
         return true;
       });
-    },
+      return true;
+   }
   });
 
 
@@ -673,23 +725,32 @@ Version: 3.5.0
       var currentArticle = $('article.current');
       var destination = $(articleID);
       var currentToolbar;
-      var destinationToolbar;
-      var prevArticles = $.UINavigationHistory.splice(historyIndex+1);
+      var destinationToolbar;      
+      if ($.UINavigationHistory.length === 0) {
+        destination = $('article:first-of-type');
+        $.UINavigationHistory.push('#' + destination[0].id);
+      }
+      var prevArticles;
+      if ($.UINavigationHistory.length > 1) {
+        prevArticles = $.UINavigationHistory.splice(historyIndex+1);
+      } else {
+        prevArticles = $('article.previous');
+      }
       $.publish('chui/navigateBack/leave', currentArticle[0].id);
       $.publish('chui/navigateBack/enter', destination[0].id);
       currentArticle[0].scrollTop = 0;
       destination[0].scrollTop = 0;
       if (prevArticles.length) {
-        prevArticles.forEach(function(ctx) {
+        $.each(prevArticles, function(_, ctx) {
           $(ctx).removeClass('previous').addClass('next');
           $(ctx).prev().removeClass('previous').addClass('next');
         });
       }
       currentToolbar = currentArticle.next().hazClass('toolbar');
       destinationToolbar = destination.next().hazClass('toolbar');
-      destination.removeClass('previous').addClass('current');
-      destination.prev().removeClass('previous').addClass('current');
-      destinationToolbar.removeClass('previous').addClass('current');
+      destination.removeClass('previous next').addClass('current');
+      destination.prev().removeClass('previous next').addClass('current');
+      destinationToolbar.removeClass('previous next').addClass('current');
       currentArticle.removeClass('current').addClass('next');
       currentArticle.prev().removeClass('current').addClass('next');
       currentToolbar.removeClass('current').addClass('next');
@@ -707,6 +768,10 @@ Version: 3.5.0
       var destination = $($.UINavigationHistory[histLen-2]);
       var currentToolbar;
       var destinationToolbar;
+      if (histLen === 0) {
+        destination = $('article:first-of-type');
+        $.UINavigationHistory.push('#' + destination[0].id);
+      }
       $.publish('chui/navigateBack/leave', currentArticle[0].id);
       $.publish('chui/navigateBack/enter', destination[0].id);
       currentArticle[0].scrollTop = 0;
@@ -720,9 +785,8 @@ Version: 3.5.0
       currentArticle.prev().removeClass('current').addClass('next');
       currentToolbar.removeClass('current').addClass('next');
       $.UISetHashOnUrl($.UINavigationHistory[histLen-2]);
-      if ($.UINavigationHistory[histLen-1] !== $('article').eq(0)[0].id) {
-        $.UINavigationHistory.pop();
-      }
+      if ($.UINavigationHistory.length === 1) return;
+      $.UINavigationHistory.pop();
     },
 
     isNavigating : false,
@@ -740,6 +804,7 @@ Version: 3.5.0
       var destinationNav = destination.prev();
       var currentToolbar;
       var destinationToolbar;
+      var navigationClass = 'next previous';
       $.publish('chui/navigate/leave', current[0].id);
       $.UINavigationHistory.push(destinationID);
       $.publish('chui/navigate/enter', destination[0].id);
@@ -750,9 +815,9 @@ Version: 3.5.0
       current.removeClass('current').addClass('previous');
       currentNav.removeClass('current').addClass('previous');
       currentToolbar.removeClass('current').addClass('previous');
-      destination.removeClass('next').addClass('current');
-      destinationNav.removeClass('next').addClass('current');
-      destinationToolbar.removeClass('next').addClass('current');
+      destination.removeClass(navigationClass).addClass('current');
+      destinationNav.removeClass(navigationClass).addClass('current');
+      destinationToolbar.removeClass(navigationClass).addClass('current');
     
       $.UISetHashOnUrl(destination[0].id);
       setTimeout(function() {
@@ -854,6 +919,7 @@ Version: 3.5.0
     $('body').on('singletap', '.button', function() {
       var $this = $(this);
       if ($this.parent('.segmented')[0]) return;
+      if ($this.parent('.tabbar')[0]) return;
       $this.addClass('selected');
       setTimeout(function() {
         $this.removeClass('selected');
@@ -1428,6 +1494,8 @@ Version: 3.5.0
       var editButton;
       var deletionIndicator;
       var button;
+      var swipe = 'swiperight';
+      if ($('html').attr('dir') === 'rtl') swipe = 'swipeleft';
       // Windows uses an icon for the delete button:
       if ($.isWin) deleteLabel = '';
       if (list[0].classList.contains('deletable')) return;
@@ -1445,13 +1513,8 @@ Version: 3.5.0
       }
       list.find('li').prepend(deletionIndicator);
       list.find('li').append(deleteButton);
-      $('li').find('.delete').each(function(ctx, idx) {
-        if (window && window.jQuery && $ === window.jQuery) ctx = idx;
-        if ($.isiOS || $.isSafari) $(ctx).css({height: height + 'px'});
-      });
       var setupDeletability = function(callback, list, button) {
         var deleteSlide;
-        console.dir(button);
         if ($.isiOS) {
           deleteSlide = '100px';
         } else if ($.isAndroid) {
@@ -1480,22 +1543,24 @@ Version: 3.5.0
             }
           });
           $(list).on('singletap', '.deletion-indicator', function() {
-            if ($(this).closest('li')[0].classList.contains('selected')) {
-              $(this).closest('li').removeClass('selected');
+            if ($(this).parent('li').hasClass('selected')) {
+              $(this).parent('li').removeClass('selected');
               return;
             } else {
-              $(this).closest('li').addClass('selected');
+              $(this).parent('li').addClass('selected');
             }
           });
         
           if ($.isiOS || $.isSafari) {
-            $(list).on('swiperight', 'li', function() {
+            $(list).on(swipe, 'li', function() {
               $(this).removeClass('selected');
             });
           }
           $(list).on('singletap', '.delete', function() {
             var $this = this;
-            $(this).siblings().css({'-webkit-transform': 'translate3d(-1000%,0,0)', '-webkit-transition': 'all 1s ease-out'});
+            var direction = '-1000%';
+            if ($('html').attr('dir') === 'rtl') direction = '1000%';
+            $(this).siblings().css({'-webkit-transform': 'translate3d(' + direction + ',0,0)', '-webkit-transition': 'all 1s ease-out'});
             setTimeout(function() {
               callback.call(callback, $this);
               $($this).parent().remove();
@@ -1593,7 +1658,7 @@ Version: 3.5.0
         $.UIHideSheet();
       });
     },
-  
+
     UIShowSheet : function ( ) {
       $('article.current').addClass('blurred');
       if ($.isAndroid || $.isChrome) {
@@ -1605,15 +1670,15 @@ Version: 3.5.0
         $('.sheet').addClass('opened');
       }
     },
-  
+
     UIHideSheet : function ( ) {
       $('.sheet').removeClass('opened');
-      $('article.current').addClass('removeBlurSlow'); 
+      $('article.current').addClass('removeBlurSlow');
       setTimeout(function() {
         $('article').removeClass('blurred');
-        $('article').removeClass('removeBlurSlow'); 
+        $('article').removeClass('removeBlurSlow');
       },500);
-    },
+    }
   });
 
 
@@ -1858,6 +1923,27 @@ Version: 3.5.0
     $('.switch').UISwitch();
   });
  
+
+  document.addEventListener('touchstart', function (e) {
+    var parent = e.target,
+      i = 0;
+
+    for (i = 0; i < 10; i += 1) {
+      if (parent !== null) {
+        if (parent.className !== undefined) {
+          if (parent.className.match('navigable')) {
+            if (parent.scrollTop === 0) {
+              parent.scrollTop = 1;
+            } else if ((parent.scrollTop + parent.offsetHeight) === parent.scrollHeight) {
+              parent.scrollTop = parent.scrollTop - 1;
+            }
+          }
+        }
+        parent = parent.parentNode;
+      }
+    }
+  });
+
 
   $.extend({
     ///////////////////////////////////////////
