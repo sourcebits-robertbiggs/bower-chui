@@ -3,15 +3,15 @@
    6  /\
      /OO\
     /OOOO\
-  /OOOOOOOO\
- ((OOOOOOOO))
-  \:~=++=~:/
+   /OOOOOO\
+  (OOOOOOOO)
+   \:~==~:/
 
 ChocolateChip-UI
-ChUI.iOS.css
+ChUI-iOS.css
 Copyright 2014 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.5.1
+Version: 3.5.2
 */
 /* ==============================
    Body
@@ -48,7 +48,6 @@ h1,
   font-weight: 200;
   line-height: 1.1429;
   /* 64px when font-size is 42pt */
-
 }
 h2,
 .type-x-large {
@@ -56,7 +55,6 @@ h2,
   font-weight: 200;
   line-height: 1.2;
   /* 32px when font-size is 20pt */
-
 }
 h3,
 .type-large {
@@ -64,7 +62,6 @@ h3,
   font-weight: 600;
   line-height: 1.3636;
   /* 20px when font-size is 11pt */
-
 }
 h4,
 .type-medium,
@@ -75,7 +72,6 @@ samp {
   font-weight: 400;
   line-height: 1.3636;
   /* 20px when font-size is 11pt */
-
 }
 body,
 h5,
@@ -85,7 +81,6 @@ legend {
   font-weight: 300;
   line-height: 1.3636;
   /* 20px when font-size is 11pt */
-
 }
 h6,
 caption,
@@ -96,7 +91,6 @@ small,
   font-weight: 400;
   line-height: 1.6667;
   /* 20px when font-size is 9pt */
-
 }
 /* ==============================
    Article (view)
@@ -118,13 +112,11 @@ article {
   -webkit-box-align: center;
   -webkit-box-pack: start;
   /* New syntax */
-
   display: -webkit-flex;
   -webkit-flex-direction: column;
   -webkit-justify-content: center;
   -webkit-align-items: flex-start;
   /* No prefix */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -203,13 +195,11 @@ article > section,
 .vertical,
 li.comp > aside.vertical {
   /* Old syntax */
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-box-pack: start;
   -webkit-box-align: start;
   /* New syntax */
-
   display: -webkit-flex;
   -webkit-flex-direction: column;
   -webkit-justify-content: flex-start;
@@ -221,13 +211,11 @@ li.comp > aside.vertical {
 }
 .horizontal {
   /* Old syntax */
-
   display: -webkit-box;
   -webkit-align-items: start;
   -webkit-box-pack: start;
   -webkit-box-align: start;
   /* New syntax */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-box-orient: horizontal;
@@ -371,13 +359,11 @@ nav {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: start;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-justify-content: flex-start;
@@ -945,13 +931,11 @@ html[dir=rtl] .grid {
   transition: none;
   font-size: 10pt;
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: column;
   -webkit-justify-content: center;
@@ -1024,7 +1008,8 @@ html[dir=rtl] .segmented .button:last-of-type {
   position: relative;
   border-radius: 0 !important;
 }
-.segmented.paging > .button:hover .segmented.paging > .button.selected {
+.segmented.paging > .button:hover,
+.segmented.paging > .button.selected {
   opacity: .5 !important;
   color: #007aff;
 }
@@ -1148,13 +1133,11 @@ html[dir=rtl] .segmented.paging.horizontal > .button::before {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: start;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-justify-content: flex-start;
@@ -1210,13 +1193,11 @@ html[dir=rtl] .splitlayout > .detail + .toolbar {
    =========================== */
 body.splitlayout {
   /* Old syntax */
-
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: start;
   -webkit-box-align: stretch;
   /* New syntax */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-justify-content: flex-start;
@@ -1432,13 +1413,11 @@ html[dir=rtl] body.splitlayout > article.detail {
 }
 .popup > .panel {
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: start;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-justify-content: flex-start;
@@ -1541,13 +1520,11 @@ html[dir=rtl] body.splitlayout > article.detail {
   top: 0;
   bottom: 0;
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: column;
   -webkit-justify-content: center;
@@ -1645,6 +1622,34 @@ textarea {
   -webkit-appearance: none;
   box-shadow: none;
   border: none;
+}
+.searchBar {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  height: 45px;
+  background-color: #c9c9ce;
+  padding: 5px 10px;
+}
+input[type="search"] {
+  display: block;
+  background-color: #fff;
+  padding: 7px 0 7px 10px;
+  border-radius: 5px;
+  border-color: transparent;
+  width: 100%;
+  -webkit-appearance: none;
+  padding-left: 20px;
+  -webkit-transtion: all 0.5s ease-out;
+  background-image: url("data:image/svg+xml;utf8,<svg version='1.1' id='Layer_2' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='48px' height='48px' viewBox='0 0 48 48' enable-background='new 0 0 48 48' xml:space='preserve'><path d='M42.71,38.482L32.478,28.208c1.598-2.385,2.532-5.249,2.532-8.329c0-8.273-6.73-15.004-15.004-15.004 S5.001,11.606,5.001,19.879c0,8.274,6.731,15.004,15.004,15.004c3.055,0,5.896-0.923,8.27-2.497l10.236,10.279 c0.858,0.861,2.19,0.927,2.977,0.143l1.354-1.349C43.629,40.678,43.569,39.345,42.71,38.482z M10.001,19.879    c0-5.517,4.488-10.004,10.004-10.004S30.01,14.363,30.01,19.879c0,5.516-4.487,10.004-10.004,10.004S10.001,25.396,10.001,19.879z' fill='#bbb' /></svg>");
+  background-position: 5px center;
+  text-align: left;
+  background-size: 14px 14px;
+  background-repeat: no-repeat;
+  -webkit-user-select: ignore;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+input[type="search"]:focus {
+  outline: none;
 }
 /* ==============================
    Icon
@@ -1836,13 +1841,11 @@ article.current.blurred.removeBlurSlow {
   -webkit-box-align: center;
   -webkit-box-pack: start;
   /* New syntax */
-
   display: -webkit-flex;
   -webkit-flex-direction: column;
   -webkit-justify-content: center;
   -webkit-align-items: flex-start;
   /* No prefix */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1910,15 +1913,14 @@ html[dir=rtl] .slide-out.open {
 }
 /* ==============================
    Stepper Control
-   =========================== */.stepper {
+   =========================== */
+.stepper {
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: start;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-justify-content: flex-start;
@@ -2189,13 +2191,11 @@ body.hasTabBar .next:not(.navigable) {
 }
 .tabbar {
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: start;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: row;
   -webkit-justify-content: flex-start;
@@ -2225,13 +2225,11 @@ body.hasTabBar .next:not(.navigable) {
   -webkit-box-flex: 1 !important;
   -webkit-flex: 1 !important;
   /* old flex box */
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-box-pack: center;
   -webkit-box-align: center;
   /* new flex box */
-
   display: -webkit-flex;
   -webkit-flex-direction: column;
   -webkit-justify-content: center;

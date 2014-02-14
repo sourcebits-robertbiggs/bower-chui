@@ -3,15 +3,15 @@
    6  /\
      /OO\
     /OOOO\
-  /OOOOOOOO\
- ((OOOOOOOO))
-  \:~=++=~:/
+   /OOOOOO\
+  (OOOOOOOO)
+   \:~==~:/
 
 ChocolateChip-UI
-ChUI.Win.css
+ChUI-Win.css
 Copyright 2014 Sourcebits www.sourcebits.com
 License: MIT
-Version: 3.5.1
+Version: 3.5.2
 */
 /* ==============================
    Body
@@ -31,7 +31,6 @@ body {
 }
 body {
   /* Change background color for your app: */
-
   background-color: #000000;
   font: normal 10pt/13pt SegoeWP, SegoeUI, HelveticaNeue, Sans-serif;
   -ms-user-select: none;
@@ -191,7 +190,6 @@ a.button.backTo {
   font-size: 0;
   line-height: 30px !important;
   /* line-height must match the content box height. */
-
   vertical-align: baseline;
   overflow: hidden;
 }
@@ -1053,7 +1051,8 @@ html[dir=rtl] body.splitlayout > article.detail {
 }
 /* ==============================
    Busy Control
-   =========================== */.busy {
+   =========================== */
+.busy {
   width: 150px;
   display: block;
   margin-left: auto;
@@ -1202,9 +1201,6 @@ nav > .busy {
 html[dir=rtl] .popup footer > .button:first-of-type {
   border-right: solid 2px #000000;
   border-left: solid 2px #000000;
-}
-@media only screen and (max-device-width: 240px) and (orientation: portrait) {
-  
 }
 /* ============================== 
    Deletable Lists
@@ -1378,6 +1374,50 @@ html[dir=rtl] select::-ms-expand {
   border: none;
   border-right: solid 2px #ffffff;
   padding: 0 4px 0 0;
+}
+.searchBar {
+  width: auto;
+  box-sizing: border-box;
+  height: 30px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.searchBar > input[type="search"] {
+  padding: 4px 0 4px 10px;
+  width: auto;
+  padding-left: 10px;
+  margin-left: 25px;
+  text-align: left;
+  color: #000;
+  background-color: #fff !important;
+  border: none;
+  border: solid 2px #fff;
+}
+.searchBar > input[type="search"]:focus {
+  text-align: left;
+  outline: none !important;
+  color: #000;
+}
+.searchBar > input[type="search"]::-ms-clear {
+  color: #000;
+  border: solid 1px #000;
+  height: 20px;
+  margin: 2px 4px 2px 0;
+}
+.searchGlyph {
+  font-family: 'Segoe UI Symbol';
+  display: inline-block;
+  height: 28px;
+  width: 28px;
+  box-sizing: border-box;
+  padding: 2px;
+  line-height: 16px;
+  background-color: #000;
+  border: solid 3px #fff;
+  color: #fff;
 }
 /* ==============================
    Icon Styles
@@ -1605,7 +1645,8 @@ html[dir=rtl] .button.slide-out-button::before {
 }
 /* ==============================
    Stepper Control
-   =========================== */.stepper {
+   =========================== */
+.stepper {
   display: -ms-inline-flexbox;
   -ms-flex-direction: row;
   -ms-flex-pack: center;
@@ -1827,9 +1868,9 @@ body.hasTabBar > article {
     width: 240px;
   }
   /*
-      IMPORTANT! Define width for html and body
-      to prevent horizontal scrolling when viewport is resized.
-    */
+    IMPORTANT! Define width for html and body
+    to prevent horizontal scrolling when viewport is resized.
+  */
   html,
   body,
   body {
@@ -1837,9 +1878,9 @@ body.hasTabBar > article {
     height: 400px;
   }
   /*h1.buttonOnRight {
-      width: 60%;
-    
-    }*/
+    width: 60%;
+  
+  }*/
   nav > .button {
     -ms-flex: 1;
   }
