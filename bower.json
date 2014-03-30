@@ -12,7 +12,12 @@
     "node_modules",
     "bower_components"
   ],
-  "main": ["./*.js", "./*.css"],
+  "main": [
+    "chui-3.5.2.js", 
+    "chui-android-3.5.2.css",
+    "chui-ios-3.5.2.css",
+    "chui-win-3.5.2.css"
+  ],
   "dependencies": {
     "jquery": "2.0.3"
   }
